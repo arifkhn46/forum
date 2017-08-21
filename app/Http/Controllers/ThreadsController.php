@@ -18,7 +18,7 @@ class ThreadsController extends Controller
         return view('threads.index', compact('threads'));
     }
 
-    public  function show(Thread $thread)
+    public  function show($chanelId, Thread $thread)
     {
         return view('threads.show', compact('thread'));
     }
@@ -28,6 +28,7 @@ class ThreadsController extends Controller
         $thread = Thread::create([
             'user_id' => auth()->id(),
             'title' => request('title'),
+            'channel_id' => request('channel_id'),
             'body' => request('body'),
         ]);
         return redirect($thread->path());
