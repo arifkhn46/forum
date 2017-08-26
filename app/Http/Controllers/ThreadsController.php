@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Channel;
+use App\Filter\ThreadFilter;
 use App\Thread;
+use App\User;
 use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
@@ -12,15 +15,22 @@ class ThreadsController extends Controller
         $this->middleware('auth')->except(['index', 'show']);
     }
 
-    public function index()
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  Channel $channel
+     * @param \App\Filter\ThreadFilter $filters
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Channel $channel, ThreadFilter $filters)
     {
-        $threads = Thread::latest()->get();
+        $threads = $this->getThreads($channel, $filters);
         return view('threads.index', compact('threads'));
     }
 
     public  function show($chanelId, Thread $thread)
     {
-        return view('threads.show', compact('thread'));
+        return view('threads.show', ['thread' => $thread, 'replies' => $thread->replies()->paginate(25)]);
     }
 
     public function store(Request $request)
@@ -42,5 +52,21 @@ class ThreadsController extends Controller
     public function create()
     {
         return view('threads.create');
+    }
+
+    /**
+     * Fetch all relevant threads.
+     *
+     * @param Channel       $channel
+     * @param \App\Filter\ThreadFilter $filters
+     * @return mixed
+     */
+    protected function getThreads(Channel $channel, ThreadFilter $filters)
+    {
+        $threads = Thread::latest()->filter($filters);
+        if ($channel->exists) {
+            $threads->where('channel_id', $channel->id);
+        }
+        return $threads->get();
     }
 }
