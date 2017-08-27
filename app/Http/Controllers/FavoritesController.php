@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Favorite;
 use App\Reply;
-
 class FavoritesController extends Controller
 {
     public function __construct()
@@ -16,13 +14,11 @@ class FavoritesController extends Controller
      * Method to store a favorite against a reply.
      *
      * @param \App\Reply $reply
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Reply $reply)
     {
-        Favorite::create([
-            'user_id' => auth()->id(),
-            'favorited_id' => $reply->id,
-            'favorited_type' => get_class($reply),
-        ]);
+        $reply->favorite();
+        return back();
     }
 }
