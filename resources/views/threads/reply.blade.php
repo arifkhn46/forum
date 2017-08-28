@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <div class="level">
             <h5 class="flex">
-                <a href="#">{{ $reply->owner->name }} </a>said {{ $thread->created_at->diffForHumans() }}
+                <a href="/profiles/{{ $reply->owner->name }}">{{ $reply->owner->name }} </a>said {{ $thread->created_at->diffForHumans() }}
             </h5>
             @if(auth()->check())
                 <div>
