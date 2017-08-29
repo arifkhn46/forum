@@ -6,8 +6,18 @@
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> posted:
-                        {{ $thread->title }}</div>
+                        <div class="level">
+                            <span class="flex">
+                                <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> posted:
+                                {{ $thread->title }}
+                            </span>
+                            <form action="{{ $thread->path() }}" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button class="btn btn-link" type="submit">Delete Thread</button>
+                            </form>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <div class="body">{{ $thread->body }}</div>
                     </div>
@@ -20,12 +30,14 @@
                     <form action="{{ $thread->path() . '/replies' }}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <textarea name="body" id="body" class="form-control" rows="5" placeholder="Have something to say?"></textarea>
+                            <textarea name="body" id="body" class="form-control" rows="5"
+                                      placeholder="Have something to say?"></textarea>
                         </div>
                         <button class="btn btn-default" type="submit">Post</button>
                     </form>
                 @else
-                    <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in this discussion. </p>
+                    <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in this
+                        discussion. </p>
                 @endif
             </div>
             <div class="col-md-4">

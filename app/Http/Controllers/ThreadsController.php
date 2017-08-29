@@ -72,4 +72,20 @@ class ThreadsController extends Controller
         }
         return $threads->get();
     }
+
+    /**
+     * Delete a thread.
+     *
+     * @param integer $channel
+     * @param \App\Thread $thread
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function destroy($channel, Thread $thread)
+    {
+        $thread->delete();
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+        return redirect('/threads');
+    }
 }
