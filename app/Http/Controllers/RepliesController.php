@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Reply;
 use App\Thread;
 use Illuminate\Http\Request;
 
@@ -19,5 +20,28 @@ class RepliesController extends Controller
             'user_id' => auth()->id(),
         ]);
         return back();
+    }
+
+    /**
+     * Destroy a reply.
+     *
+     * @param \App\Reply $reply
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $reply->delete();
+        if (request()->expectsJson()) {
+            return response(['status' => 'Reply Deleted!']);
+        }
+        return back();
+    }
+
+
+    public function update(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $reply->update(request(['body']));
     }
 }
