@@ -15,10 +15,16 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread)
     {
-        $thread->addReply([
+        $this->validate(request(), ['body' => 'required']);
+
+        $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id(),
         ]);
+
+         if (request()->expectsJson()) {
+            return $reply->load('owner');
+        }
         return back();
     }
 
