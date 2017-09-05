@@ -25,7 +25,7 @@
                             <div class="body">{{ $thread->body }}</div>
                         </div>
                     </div>
-                    <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
+                    <replies :data="{{ $thread->replies }}" @removed="repliesCount--" @added="repliesCount++"></replies>
 
                 </div>
                 <div class="col-md-4">
