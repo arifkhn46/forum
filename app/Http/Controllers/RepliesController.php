@@ -10,7 +10,17 @@ class RepliesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'index']);
+    }
+
+    /**
+     * Get the replies associated with a threads.
+     */
+    public function index($channelId, Thread $thread)
+    {
+        if (request()->wantsJson()) {
+            return $thread->replies()->paginate(20);
+        }
     }
 
     public function store($channelId, Thread $thread)
