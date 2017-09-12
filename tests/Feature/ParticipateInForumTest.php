@@ -14,12 +14,12 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function an_authenticated_user_may_participate_in_forum_threads()
     {
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $this->signIn();
         $thread = factory('App\Thread')->create();
         $reply = factory('App\Reply')->make();
         $this->post($thread->path() . '/replies', $reply->toArray());
-        $this->get($thread->path())->assertSee($reply->body);
+        $this->assertDatabaseHas('replies', ['body' => $reply->body]);
+        $this->assertEquals(1, $thread->fresh()->replies_count);
     }
 
     /** @test */
@@ -49,6 +49,7 @@ class ParticipateInForumTest extends TestCase
         $reply = create('App\Reply', ['user_id' => auth()->id()]);
         $this->delete("/replies/{$reply->id}")->assertStatus(302);
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+        $this->assertEquals(0, $reply->thread->fresh()->replies_count);
     }
 
     /** @test */
