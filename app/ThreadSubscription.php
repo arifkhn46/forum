@@ -4,7 +4,6 @@ namespace App;
 
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
 
 class ThreadSubscription extends Model
 {
@@ -15,8 +14,11 @@ class ThreadSubscription extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class);
+    }
     public function notify($reply) {
-        dd($this->user);
-        $this->user->notify(new ThreadWasUpdated($this, $reply));
+        $this->user->notify(new ThreadWasUpdated($this->thread, $reply));
     }
 }
