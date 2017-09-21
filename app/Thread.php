@@ -44,14 +44,15 @@ class Thread extends Model
     public function addReply($reply)
     {
         $reply = $this->replies()->create($reply);
-        $this->subscriptions
-            ->filter(function($subcription) use($reply) {
-                return $subcription->user_id != $reply->user_id;
-            })
-            ->each->notify($reply);
+        $this->notifySubscribers($reply);
         return $reply;
     }
-
+    
+    /**
+     * Channel relationship.
+     *
+     * @return void
+     */
     public function channel()
     {
         return $this->belongsTo(Channel::class);
@@ -72,6 +73,7 @@ class Thread extends Model
     /**
      * Thread to user subscribed.
      * @param null $userId
+     * @return $this
      */
     public function subscribe($userId = null)
     {
@@ -104,5 +106,18 @@ class Thread extends Model
     public function getIsSubscribedToAttribute()
     {
         return $this->subscriptions()->where('user_id', auth()->id())->exists();
+    }
+
+    /**
+     * Notify subscribers.
+     *
+     * @param $reply
+     */
+    protected function notifySubscribers($reply)
+    {
+        $this->subscriptions
+            ->where('user_id', '!=', $reply->user_id)
+            ->each
+            ->notify($reply);
     }
 }
