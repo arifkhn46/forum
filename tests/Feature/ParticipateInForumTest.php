@@ -15,8 +15,8 @@ class ParticipateInForumTest extends TestCase
     public function an_authenticated_user_may_participate_in_forum_threads()
     {
         $this->signIn();
-        $thread = factory('App\Thread')->create();
-        $reply = factory('App\Reply')->make();
+        $thread = create('App\Thread');
+        $reply = make('App\Reply');
         $this->post($thread->path() . '/replies', $reply->toArray());
         $this->assertDatabaseHas('replies', ['body' => $reply->body]);
         $this->assertEquals(1, $thread->fresh()->replies_count);
@@ -71,5 +71,16 @@ class ParticipateInForumTest extends TestCase
         $this->signIn()
             ->delete("/replies/{$reply->id}")
             ->assertStatus(403);
+    }
+
+    /** @test */
+    public function replies_that_contain_span_may_not_be_created()
+    {
+        $this->signIn();
+        $thread = create('App\Thread');
+        $reply = make('App\Reply', [ 'body' => 'Yahoo Customer Support' ]);
+        $this->expectException(\Exception::class);
+        $this->post($thread->path() . '/replies', $reply->toArray());
+
     }
 }
