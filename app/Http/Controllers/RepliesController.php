@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\CreatePostForm;
 use App\Reply;
 use App\Thread;
+use App\Http\Forms\CreatePostForm;
 use Illuminate\Support\Facades\Gate;
 
 class RepliesController extends Controller
@@ -29,6 +29,7 @@ class RepliesController extends Controller
      *
      * @param $channelId
      * @param Thread $thread
+     * @param \App\Http\Controllers\CreatePostForm $form
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function store($channelId, Thread $thread, CreatePostForm $form)
