@@ -12,11 +12,13 @@
         </div>
         <div class="panel-body">
             <div v-if="editing">
-                <div class="form-group">
-                    <textarea class="form-control" v-model="body"></textarea>
-                </div>
-                <button class="btn btn-xs btn-primary" v-on:click="update">Update</button>
-                <button class="btn btn-xs btn-links" v-on:click="editing = false">Cancel</button>
+                <form v-on:click="update">
+                    <div class="form-group">
+                        <textarea class="form-control" v-model="body" required></textarea>
+                    </div>
+                    <button class="btn btn-xs btn-primary">Update</button>
+                    <button class="btn btn-xs btn-links" v-on:click="editing = false" type="button">Cancel</button>
+                </form>
             </div>
             <div v-else>
                 <div class="body" v-text="body"></div>

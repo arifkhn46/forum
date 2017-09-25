@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Reply;
 use App\Thread;
-use App\Http\Forms\CreatePostForm;
-use Illuminate\Support\Facades\Gate;
 
 class RepliesController extends Controller
 {
@@ -16,6 +15,9 @@ class RepliesController extends Controller
 
     /**
      * Get the replies associated with a threads.
+     * @param $channelId
+     * @param Thread $thread
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index($channelId, Thread $thread)
     {
@@ -29,25 +31,15 @@ class RepliesController extends Controller
      *
      * @param $channelId
      * @param Thread $thread
-     * @param \App\Http\Controllers\CreatePostForm $form
+     * @param \App\Http\Requests\CreatePostRequest $form
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function store($channelId, Thread $thread, CreatePostForm $form)
+    public function store($channelId, Thread $thread, CreatePostRequest $form)
     {
-        if (Gate::denies('create', new Reply)) {
-            return response('You are posting too frequently, please take a break.', 422);
-        }
-        try {
-            $this->validate(request(), ['body' => 'required|spamfree']);
-            $reply = $thread->addReply([
-                'body' => request('body'),
-                'user_id' => auth()->id(),
-            ]);
-        } catch (\Exception $e) {
-            return response('Sorry your reply could not be saved this time.', 422);
-        }
-
-        return $reply->load('owner');
+        return $thread->addReply([
+            'body' => request('body'),
+            'user_id' => auth()->id(),
+        ])->load('owner');
     }
 
     /**
@@ -69,12 +61,8 @@ class RepliesController extends Controller
 
     public function update(Reply $reply)
     {
-        try {
-            $this->authorize('update', $reply);
-            $this->validate(request(), ['body' => 'required|spamfree']);
-            $reply->update(request(['body']));
-        } catch(\Exception $e){
-            return response('Sorry your reply could not be saved this time.', 422);
-        }
+        $this->authorize('update', $reply);
+        $this->validate(request(), ['body' => 'required|spamfree']);
+        $reply->update(request(['body']));
     }
 }

@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Forms;
+namespace App\Http\Requests;
 
+use App\Reply;
+use Illuminate\Support\Facades\Gate;
+use App\Exceptions\ThrottleException;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePostForm extends FormRequest
+class CreatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +16,12 @@ class CreatePostForm extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('create', new Reply);
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new ThrottleException('You are replying too frequently. Please take a break.');
     }
 
     /**
