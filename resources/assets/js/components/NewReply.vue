@@ -18,6 +18,8 @@
 	</div>
 </template>
 <script>
+	import 'jquery.caret';
+	import 'at.js';
 	export default {
 		data() {
 			return {
@@ -28,6 +30,17 @@
 			signedIn () {
 				return window.App.signedIn;
 			}
+		},
+		mounted() {
+			$('#body').atwho({
+				at: "@",
+				delay: 750,
+				callbacks: {
+					remoteFilter: function(query, callback) {
+							console.log('Called');
+					}
+				}
+			});
 		},
 		methods: {
 			addReply() {
