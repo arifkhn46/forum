@@ -59068,7 +59068,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			delay: 750,
 			callbacks: {
 				remoteFilter: function remoteFilter(query, callback) {
-					console.log('Called');
+					$.getJSON("/api/users", { name: query }, function (usernames) {
+						callback(usernames);
+					});
 				}
 			}
 		});

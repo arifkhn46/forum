@@ -26,6 +26,7 @@
         .mr-1 { margin-right: 1em; }
         [v-cloak] { display: none; }
     </style>
+    @yield('header');
     <script>
         window.App = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -45,5 +46,6 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+@yield('scripts');
 </body>
 </html>
