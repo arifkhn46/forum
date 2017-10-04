@@ -38,7 +38,7 @@ class AddAvatarTest extends TestCase
         $this->json('POST', 'api/users/' .auth()->id(). '/avatar', [
             'avatar' => $avatar,
         ]);
-        $this->assertEquals('avatars/' . $avatar->hashName(), auth()->user()->avatar_path);
+        $this->assertEquals(asset('avatars/' . $avatar->hashName()), auth()->user()->avatar_path);
         Storage::disk('public')->assertExists('avatars/' . $avatar->hashName());
     }
 }

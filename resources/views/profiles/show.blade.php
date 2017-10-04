@@ -5,10 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="page-header">
-                    <h1>
-                        {{ $profileUser->name }}
-                    </h1>
-                    <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
+                    <avatar-form :user="{{ $profileUser }}"></avatar-form>
                 </div>
                 @foreach ($activities as $date => $activity)
                     <h3 class="page-header">{{ $date }}</h3>
