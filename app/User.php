@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar_path'
+        'name', 'email', 'password', 'avatar_path', 'confirmation_token', 'confirmed'
     ];
 
     /**
@@ -33,6 +33,13 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token', 'email',
+    ];
+
+    /**
+     * The atrributes that should be cast.
+     */
+    protected $casts = [
+        'confirmed' => 'boolean'
     ];
 
     /**
@@ -57,6 +64,12 @@ class User extends Authenticatable
     public function visitedThreadCacheKey($thread)
     {
         return sprintf("users.%s.visits.%s", $this->id, $thread->id);
+    }
+
+    public function confirm()
+    {
+        $this->confirmed = true;
+        $this->save();
     }
 
     /**

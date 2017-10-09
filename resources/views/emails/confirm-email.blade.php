@@ -1,11 +1,10 @@
 @component('mail::message')
-# one last step
+# One Last Step
 
-We just need you to confirm your email address to prove that you are a human. You get it right? Cool.
+We just need you to confirm your email address to prove that you're a human. You get it, right? Coo.
 
-
-@component('mail::button', ['url' => '#'])
- Confirm Email
+@component('mail::button', ['url' => url('/register/confirm?token=' . $user->confirmation_token)])
+Confirm Email
 @endcomponent
 
 Thanks,<br>
