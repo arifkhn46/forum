@@ -57,7 +57,7 @@ class CreateThreadTest extends TestCase
             ->assertSessionHasErrors('channel_id');
     }
 
-    public function publishThread($overrides)
+    public function publishThread($overrides = [])
     {
         $this->withExceptionHandling()->signIn();
         $thread = make('App\Thread', $overrides);
@@ -74,6 +74,7 @@ class CreateThreadTest extends TestCase
         $this->signIn();
         $this->delete($thread->path())->assertStatus(403);
     }
+    
     /** @test */
     public function authorized_thread_can_be_deleted()
     {
@@ -86,5 +87,14 @@ class CreateThreadTest extends TestCase
         $this->assertDatabaseMissing('threads', ['id' => $thread->id ]);
         $this->assertDatabaseMissing('replies', ['id' => $reply->id ]);
         $this->assertEquals(0, Activity::count());
+    }
+
+    /** @test */
+    public function authenticated_users_must_confirm_thier_email_address_before_creating_threads()
+    {
+        $this->publishThread()
+            ->assertRedirect('/threads')
+            ->assertSessionHas('flash');
+    
     }
 }

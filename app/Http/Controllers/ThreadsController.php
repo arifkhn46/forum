@@ -45,17 +45,20 @@ class ThreadsController extends Controller
 
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'title' => 'required|spamfree',
             'body'  => 'required|spamfree',
             'channel_id' => 'required|exists:channels,id',
         ]);
+
         $thread = Thread::create([
             'user_id' => auth()->id(),
             'title' => request('title'),
             'channel_id' => request('channel_id'),
             'body' => request('body'),
         ]);
+
         return redirect($thread->path())
             ->with('flash', 'Your thread has been published!');
     }
