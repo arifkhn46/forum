@@ -58,6 +58,15 @@ class CreateThreadTest extends TestCase
             ->assertSessionHasErrors('channel_id');
     }
 
+    /** @test */
+    public function a_thread_requirs_a_unique_slug()
+    {
+        $thread = create('App\Thread', ['title' => 'Foo Title', 'slug' => 'foo-title']);
+        $this->assertEquals($thread->fresh()->slug, 'foo-title');
+        $this->publishThread($thread->toArray());
+        $this->assertDatabaseHas('threads', ['slug' => 'foo-title-2']);
+    }
+
     public function publishThread($overrides = [])
     {
         $user = factory('App\User')->states('confirmed')->create();
