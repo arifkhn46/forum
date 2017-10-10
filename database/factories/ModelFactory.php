@@ -24,6 +24,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->state('App\User', 'confirmed', function() {
+    return [
+        'confirmed' => true        
+    ];
+});
+
 /**
  * Thread model factory.
  */

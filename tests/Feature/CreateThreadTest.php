@@ -13,11 +13,12 @@ class CreateThreadTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function an_authenticated_user_can_create_a_thread()
+    public function an_user_can_create_a_new_forum_thread()
     {
-        $this->signIn();
+        $user = factory('App\User')->states('confirmed')->create();
+        $this->signIn($user);
         $thread = make('App\Thread');
-        $response = $this->post('/threads', $thread->toArray());
+        $response = $this->post(route('threads'), $thread->toArray());
         $this->get($response->headers->get('Location'))
                 ->assertSee($thread->title)
                 ->assertSee($thread->body);
@@ -28,9 +29,9 @@ class CreateThreadTest extends TestCase
     {
         $this->withExceptionHandling();
         $this->get('/threads/create')
-            ->assertRedirect('/login');
-        $this->post('/threads', [])
-            ->assertRedirect('/login');
+            ->assertRedirect(route('login'));
+        $this->post(route('threads'), [])
+            ->assertRedirect(route('login'));
     }
 
     /** @test */
@@ -59,9 +60,10 @@ class CreateThreadTest extends TestCase
 
     public function publishThread($overrides = [])
     {
-        $this->withExceptionHandling()->signIn();
+        $user = factory('App\User')->states('confirmed')->create();
+        $this->withExceptionHandling()->signIn($user);
         $thread = make('App\Thread', $overrides);
-        return $this->post('threads', $thread->toArray());
+        return $this->post(route('threads'), $thread->toArray());
     }
 
     /** @test */
@@ -70,7 +72,7 @@ class CreateThreadTest extends TestCase
         $this->withExceptionHandling();
         $thread = create('App\Thread');
         $response = $this->delete($thread->path());
-        $response->assertRedirect('/login');
+        $response->assertRedirect(route('login'));
         $this->signIn();
         $this->delete($thread->path())->assertStatus(403);
     }
@@ -90,10 +92,12 @@ class CreateThreadTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_must_confirm_thier_email_address_before_creating_threads()
+    public function new_users_must_confirm_thier_email_address_before_creating_threads()
     {
-        $this->publishThread()
-            ->assertRedirect('/threads')
+        $this->signIn();
+        $thread = make('App\Thread');
+        $this->post(route('threads'), $thread->toArray())
+            ->assertRedirect(route('threads'))
             ->assertSessionHas('flash');
     
     }

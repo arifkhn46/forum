@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/threads/create', 'ThreadsController@create');
-Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirmed');
+Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirmed')->name('threads');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
 Route::get('/threads/{channel?}', 'ThreadsController@index');
@@ -35,7 +35,7 @@ Route::delete('/replies/{reply}', 'RepliesController@destroy');
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
 Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index');
-Route::get('/register/confirm', 'Api\RegisterConfirmationController@index');
+Route::get('/register/confirm', 'Auth\RegisterConfirmationController@index')->name('register.confirm');
 
 Route::get('api/users', 'Api\UsersController@index');
 Route::post('api/users/{user}/avatar', 'Api\UsersAvatarController@store')->middleware('auth')->name('avatar');
