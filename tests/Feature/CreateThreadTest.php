@@ -61,10 +61,22 @@ class CreateThreadTest extends TestCase
     /** @test */
     public function a_thread_requirs_a_unique_slug()
     {
-        $thread = create('App\Thread', ['title' => 'Foo Title', 'slug' => 'foo-title']);
+        $thread = create('App\Thread', ['title' => 'Foo Title']);
         $this->assertEquals($thread->fresh()->slug, 'foo-title');
         $this->publishThread($thread->toArray());
         $this->assertDatabaseHas('threads', ['slug' => 'foo-title-2']);
+    }
+
+    /** @test */
+    public function a_thread_with_a_title_that_ends_in_a_number_should_generate_the_proper_slug()
+    {
+        $thread = create('App\Thread', ['title' => 'Foo Title 25']);
+        $this->assertEquals($thread->fresh()->slug, 'foo-title-25');
+        $user = factory('App\User')->states('confirmed')->create();
+        $this->signIn($user);
+        $response = $this->postJson(route('threads'), $thread->toArray())->json();
+        $this->assertDatabaseHas('threads', ['slug' => $response['slug']]);
+    
     }
 
     public function publishThread($overrides = [])
