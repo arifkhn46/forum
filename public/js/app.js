@@ -57473,7 +57473,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/Flash.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\Flash.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Flash.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -57531,7 +57531,7 @@ exports = module.exports = __webpack_require__(156)(undefined);
 
 
 // module
-exports.push([module.i, "\n.alert-flash {\n    position: fixed;\n    right: 25px;\n    bottom: 25px;\n}\n", ""]);
+exports.push([module.i, "\n.alert-flash {\r\n    position: fixed;\r\n    right: 25px;\r\n    bottom: 25px;\n}\r\n", ""]);
 
 // exports
 
@@ -57975,7 +57975,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/Paginator.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\Paginator.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Paginator.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58118,7 +58118,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/UserNotifications.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\UserNotifications.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] UserNotifications.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58242,7 +58242,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/AvatarForm.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\AvatarForm.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] AvatarForm.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58336,7 +58336,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/ImageUpload.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\ImageUpload.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ImageUpload.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58469,7 +58469,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/pages/Thread.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\pages\\Thread.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -58531,7 +58531,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/Replies.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\Replies.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Replies.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58631,7 +58631,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/Reply.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\Reply.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Reply.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58696,6 +58696,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -58721,7 +58724,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             editing: false,
             id: this.data.id,
-            body: this.data.body
+            body: this.data.body,
+            isBest: false
         };
     },
 
@@ -58739,6 +58743,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         destroy: function destroy() {
             axios.delete('/replies/' + this.data.id);
             this.$emit('deleted', this.data.id);
+        },
+        markBestReply: function markBestReply() {
+            this.isBest = true;
         }
     }
 });
@@ -58760,7 +58767,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/Favorite.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\Favorite.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Favorite.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -59114,7 +59121,8 @@ webpackContext.id = 182;
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "panel panel-default",
+    staticClass: "panel",
+    class: _vm.isBest ? 'panel-success' : 'panel-default',
     attrs: {
       "id": 'reply-' + _vm.id
     }
@@ -59184,9 +59192,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "innerHTML": _vm._s(_vm.body)
     }
-  })])]), _vm._v(" "), (_vm.canUpdate) ? _c('div', {
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "panel-footer level"
-  }, [_c('button', {
+  }, [(_vm.canUpdate) ? _c('div', [_c('button', {
     staticClass: "btn btn-xs mr-1",
     on: {
       "click": function($event) {
@@ -59198,7 +59206,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.destroy
     }
-  }, [_vm._v("Delete")])]) : _vm._e()])
+  }, [_vm._v("Delete")])]) : _vm._e(), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.isBest),
+      expression: "!isBest"
+    }],
+    staticClass: "btn btn-default btn-xs ml-a",
+    on: {
+      "click": _vm.markBestReply
+    }
+  }, [_vm._v("Best Reply?")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -59225,7 +59244,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/NewReply.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\NewReply.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] NewReply.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -61116,7 +61135,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/arif/sites/forum/resources/assets/js/components/SubscribeButton.vue"
+Component.options.__file = "D:\\valet\\forum\\resources\\assets\\js\\components\\SubscribeButton.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SubscribeButton.vue: functional components are not supported with templates, they should use render functions.")}
 
