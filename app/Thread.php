@@ -51,6 +51,11 @@ class Thread extends Model
         event(new ThreadReceivedNewReply($reply));
         return $reply;
     }
+
+    public function lock() 
+    {
+        $this->update(['locked' => true]);
+    }
     
     /**
      * Channel relationship.
@@ -140,4 +145,5 @@ class Thread extends Model
 
         $this->attributes['slug'] = $slug;
     }
+    
 }
