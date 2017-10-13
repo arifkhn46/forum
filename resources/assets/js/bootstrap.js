@@ -21,10 +21,20 @@ try {
 
 window.Vue = require('vue');
 
-Vue.prototype.authorize = function (handler) {
-    let user = window.App.user;
-    return user ? handler(window.App.user) : false;
+let authorizations = require('./authorizations');
+
+Vue.prototype.authorize = function (...params) {
+
+    if ( ! window.App.user) return false;
+    
+    if (typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return param[0](window.App.user);
 }
+
+Vue.prototype.signedIn = window.App.signedIn;
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

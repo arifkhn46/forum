@@ -26754,8 +26754,8 @@ window._ = __webpack_require__(130);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(3);
-  __webpack_require__(131);
+    window.$ = window.jQuery = __webpack_require__(3);
+    __webpack_require__(131);
 } catch (e) {}
 
 /**
@@ -26766,10 +26766,24 @@ try {
 
 window.Vue = __webpack_require__(132);
 
-Vue.prototype.authorize = function (handler) {
-  var user = window.App.user;
-  return user ? handler(window.App.user) : false;
+var authorizations = __webpack_require__(203);
+
+Vue.prototype.authorize = function () {
+
+    if (!window.App.user) return false;
+
+    for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
+        params[_key] = arguments[_key];
+    }
+
+    if (typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return param[0](window.App.user);
 };
+
+Vue.prototype.signedIn = window.App.signedIn;
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -26789,9 +26803,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -26813,9 +26827,9 @@ if (token) {
 window.events = new Vue();
 
 window.flash = function (message) {
-  var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+    var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
 
-  window.events.$emit('flash', { message: message, level: level });
+    window.events.$emit('flash', { message: message, level: level });
 };
 
 /***/ }),
@@ -58708,16 +58722,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         ago: function ago() {
             return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.data.created_at).fromNow();
-        },
-        signedIn: function signedIn() {
-            return window.App.signedIn;
-        },
-        canUpdate: function canUpdate() {
-            var _this = this;
-
-            return this.authorize(function (user) {
-                return _this.data.user_id == window.App.user.id;
-            });
         }
     },
     data: function data() {
@@ -58725,7 +58729,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             editing: false,
             id: this.data.id,
             body: this.data.body,
-            isBest: false
+            isBest: false,
+            reply: this.data
         };
     },
 
@@ -59194,7 +59199,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "panel-footer level"
-  }, [(_vm.canUpdate) ? _c('div', [_c('button', {
+  }, [(_vm.authorize('updateReply', _vm.reply)) ? _c('div', [_c('button', {
     staticClass: "btn btn-xs mr-1",
     on: {
       "click": function($event) {
@@ -59304,12 +59309,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		return {
 			body: ''
 		};
-	},
-
-	computed: {
-		signedIn: function signedIn() {
-			return window.App.signedIn;
-		}
 	},
 	mounted: function mounted() {
 		$('#body').atwho({
@@ -61214,6 +61213,26 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */
+/***/ (function(module, exports) {
+
+var user = window.App.user;
+
+module.exports = {
+    updateReply: function updateReply(reply) {
+        return reply.user_id == user.id;
+    }
+};
 
 /***/ })
 /******/ ]);
