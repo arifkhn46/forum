@@ -30,6 +30,12 @@ $factory->state('App\User', 'confirmed', function() {
     ];
 });
 
+$factory->state('App\User', 'administrator', function() {
+    return [
+        'name' => 'JohnDoe',        
+    ];
+});
+
 /**
  * Thread model factory.
  */

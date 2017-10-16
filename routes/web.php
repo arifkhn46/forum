@@ -20,6 +20,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/threads/create', 'ThreadsController@create');
 Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirmed')->name('threads');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
+Route::post('/locked-threads/{thread}', 'LockedThreadsController@store')->name('locked-threads.store')->middleware('admin');
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
 Route::get('/threads/{channel?}', 'ThreadsController@index');
 Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store')->middleware('auth');

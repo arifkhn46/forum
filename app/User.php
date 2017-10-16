@@ -93,4 +93,14 @@ class User extends Authenticatable
     {
         return asset($avatar ?: 'images/avatars/default.png');
     }
+
+    /**
+     * determine if the user is admin.
+     *
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return in_array($this->name, ['JohnDoe', 'JaneDoe']);
+    }
 }
