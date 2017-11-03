@@ -89,6 +89,16 @@ class ThreadsController extends Controller
         return $threads->paginate(25);
     }
 
+    public function update($channel, Thread $thread)
+    {
+        $this->authorize('update', $thread);
+        $thread->update(request()->validate([
+            'title' => 'required|spamfree',
+            'body'  => 'required|spamfree',
+        ]));
+        return $thread;
+    }
+
     /**
      * Delete a thread.
      *
