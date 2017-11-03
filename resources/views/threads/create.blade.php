@@ -30,7 +30,7 @@
                                 <textarea name="body" class="form-control" placeholder="enter the body" id="body" rows="8" >{{ old('body') }}</textarea>
                             </div>
                             <div class="form-group">
-                                <div class="g-recaptcha" data-sitekey="6LfFyDUUAAAAANwX03NsiOM-Pg1KBRBe7I5RS0Hr"></div>                        
+                                <div class="g-recaptcha" data-sitekey="6LdaCzcUAAAAAI-nLdZsFr88Wi5-TNYnZnL7Hoti"></div>                        
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Create</button>
