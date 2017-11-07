@@ -56416,6 +56416,9 @@ module.exports = {
     },
     isAdmin: function isAdmin() {
         return ['JohnDoe', 'JaneDoe'].includes(user.name);
+    },
+    signedIn: function signedIn() {
+        return window.App.signedIn;
     }
 };
 
@@ -58541,14 +58544,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             repliesCount: this.thread.replies_count,
-            locked: this.thread.locked
+            locked: this.thread.locked,
+            editing: false
         };
     },
 
     methods: {
         toggleLock: function toggleLock() {
-            this.locked = !this.locked;
             axios[this.locked ? 'delete' : 'post']('/locked-threads/' + this.thread.slug);
+            this.locked = !this.locked;
         }
     }
 });

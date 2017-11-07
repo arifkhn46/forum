@@ -7,5 +7,8 @@ module.exports = {
     },
     isAdmin() {
         return ['JohnDoe', 'JaneDoe'].includes(user.name);
+    },
+    signedIn() {
+        return window.App.signedIn;
     }
 }
