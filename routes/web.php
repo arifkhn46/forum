@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/threads/create', 'ThreadsController@create');
+Route::get('/threads/search', 'SearchController@show');
 Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirmed')->name('threads');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
 Route::patch('/threads/{channel}/{thread}', 'ThreadsController@update');
