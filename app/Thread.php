@@ -145,5 +145,9 @@ class Thread extends Model
 
         $this->attributes['slug'] = $slug;
     }
-    
+
+    public function toSearchableArray() 
+    {
+        return $this->toArray() + ['path' => $this->path()]; 
+    }    
 }

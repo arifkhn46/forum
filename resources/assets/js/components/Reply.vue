@@ -14,7 +14,7 @@
             <div v-if="editing">
                 <form v-on:click="update">
                     <div class="form-group">
-                        <textarea class="form-control" v-model="body" required></textarea>
+                        <wysiwyg v-model="body"></wysiwyg>
                     </div>
                     <button class="btn btn-xs btn-primary">Update</button>
                     <button class="btn btn-xs btn-links" v-on:click="editing = false" type="button">Cancel</button>

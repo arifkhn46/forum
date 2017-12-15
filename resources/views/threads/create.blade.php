@@ -27,8 +27,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="body">Body:</label>
-                                <textarea name="body" class="form-control" placeholder="enter the body" id="body" rows="8" >{{ old('body') }}</textarea>
-                            </div>
+                                <wysiwyg name="body"></wysiwyg>
+
                             <div class="form-group">
                                 <div class="g-recaptcha" data-sitekey="6LdaCzcUAAAAAI-nLdZsFr88Wi5-TNYnZnL7Hoti"></div>                        
                             </div>
